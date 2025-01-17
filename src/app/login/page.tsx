@@ -6,7 +6,7 @@ export default function Register() {
       <div className="divPadreForm">
         <form className="formLogin">
           <header>
-            <h1>Regístrate</h1>
+            <h1>Regístrat</h1>
           </header>
 
           <div className="contenedorInput">
