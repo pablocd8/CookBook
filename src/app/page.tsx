@@ -1,5 +1,6 @@
 import Image from "next/image";
-import "./globals.css";
+import Link from "next/link";
+import Register from "./login/page";
 
 export default function Home() {
   return (
@@ -31,9 +32,9 @@ export default function Home() {
             <a href="" className="buttonExplorarRecetas">
               Explorar Recetas
             </a>
-            <a href="" className="buttonLogin">
-              Registrarse
-            </a>
+            <Link href="/login" className="buttonLogin">
+            Registrarse
+            </Link>
           </div>
         </div>
 
