@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  console.log('DB URL:', process.env.NILEDB_POSTGRES_URL);
+
+
   return (
     <div className="container">
       <header className="header">
@@ -20,8 +23,6 @@ export default function Home() {
           height={200}
           className="heroImage"
         />
-
-   
         <div className="containerBusquedas">
           <h2 className="tituloBusquedas">Explora nuevas recetas</h2>
           <p className="sectionSubtitulos">
@@ -99,10 +100,6 @@ export default function Home() {
         </section>
       </main>
 
-    
-      <footer className="footer">
-        © 2025 CookBook Online. Todos los derechos reservados.
-      </footer>
     </div>
   );
 }

@@ -13,7 +13,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>{children}
+      <footer className="footer">
+        © 2025 CookBook Online. Todos los derechos reservados.
+      </footer>
+      </body>
+
+     
     </html>
     
   );

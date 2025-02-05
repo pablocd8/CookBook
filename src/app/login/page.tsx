@@ -1,68 +1,79 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || "Error en el registro");
+    } else {
+      router.push("/"); // Redirige a la página principal después del registro
+    }
+  };
+
   return (
-    <>
-      <div className="divPadreForm">
-        <form className="formLogin">
-          <header>
-            <h1>Regístrat</h1>
-          </header>
+    <div className="divPadreForm">
+      <form className="formLogin" onSubmit={handleSubmit}>
+        <header>
+          <h1>Regístrate</h1>
+        </header>
 
-          <div className="contenedorInput">
-            <label htmlFor="name">Nombre:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Nombre completo"
-              aria-label="Nombre completo"
-              required
-            />
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-            <label htmlFor="email">Correo Electrónico:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="ejemplo@correo.com"
-              aria-label="Correo Electrónico"
-              required
-            />
+        <div className="contenedorInput">
+          <label htmlFor="name">Nombre:</label>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
 
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Contraseña"
-              aria-label="Contraseña"
-              required
-            />
+          <label htmlFor="email">Correo Electrónico:</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
 
-            <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirmar Contraseña"
-              aria-label="Confirmar Contraseña"
-              required
-            />
-          </div>
+          <label htmlFor="password">Contraseña:</label>
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
 
-          <input type="submit" value="Registrarse" />
-          <div className="linkRegistro">
-            <Link href="/login">
-              ¿Ya tienes una cuenta? Inicia sesión aquí
-            </Link>
-          </div>
-        </form>
-      </div>
+          <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+        </div>
 
-      <footer className="footer">
-        © 2025 CookBook Online. Todos los derechos reservados.
-      </footer>
-    </>
+        <input type="submit" value="Registrarse" />
+        <div className="linkRegistro">
+          <Link href="/login">¿Ya tienes una cuenta? Inicia sesión aquí</Link>
+        </div>
+      </form>
+    </div>
   );
 }
