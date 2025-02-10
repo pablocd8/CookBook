@@ -1,9 +1,9 @@
-import LoginForm from "@/app/components/login";
+import Recipes from "@/app/components/Recipes";
 
 export default function RegisterPage() {
   return (
     <div>
-      <LoginForm />
+      <Recipes />
     </div>
   );
 }

@@ -2,13 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   background-color: #e6ebe0;
-  
+}
+.container,
+.header,
+.main{
+  cursor: default;
+  user-select: none;
 }
 .container {
   display: flex;
@@ -28,10 +32,11 @@ body {
 .title {
   font-size: 2.5rem;
   font-weight: bold;
+  color: #0772b7;
 }
 
 .highlight {
-  color: #0772b7
+  color: #0772b7;
 }
 
 .subtitle {
@@ -65,7 +70,7 @@ body {
   margin-bottom: 8px;
 }
 
-.sectionSubtitulos{
+.sectionSubtitulos {
   font-size: 1rem;
   color: #666;
   margin-bottom: 16px;
@@ -91,7 +96,7 @@ body {
   background-color: #0b9af9;
 }
 
-.buttonLogin{
+.buttonLogin {
   background-color: #e0e0e0;
   color: #333;
   padding: 12px 24px;
@@ -111,7 +116,7 @@ body {
   gap: 24px;
   margin-top: 24px;
   max-width: 960px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .feature {
@@ -130,52 +135,54 @@ body {
   font-size: 1rem;
   color: #666;
 }
+
 .footer {
   text-align: center;
   padding: 16px;
   background-color: #0772b7;
   color: #333;
   font-size: 1rem;
-  margin-top: auto; 
+  margin-top: auto;
 }
+
 .divPadreForm {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #e6ebe0;
-
 }
 
 .formLogin {
-  background-color: #ffffff; 
-  width: 400px; 
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-  border-radius: 12px; 
+  background-color: #ffffff;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 h1 {
   font-size: 2rem;
   font-weight: bold;
-  color: #333; 
+  color: #333;
   margin-bottom: 20px;
 }
 
 .contenedorInput {
   display: flex;
   flex-direction: column;
-  width: 90%; 
+  width: 90%;
   row-gap: 20px;
   margin-top: 10px;
 }
 
 .contenedorInput label {
   font-size: 0.95rem;
-  color: #555; 
+  color: #555;
 }
 
 .contenedorInput input[type="email"],
@@ -183,15 +190,15 @@ h1 {
 .contenedorInput input[type="text"] {
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid #ddd; 
-  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #ddd;
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
 }
 
 .contenedorInput input:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0px 0px 4px rgba(0, 123, 255, 0.5); 
+  box-shadow: 0px 0px 4px rgba(0, 123, 255, 0.5);
 }
 
 .formLogin input[type="submit"] {
@@ -212,7 +219,7 @@ h1 {
 }
 
 .linkRegistro > a {
-  display: block; /* Para que ocupe todo el ancho */
+  display: block;
   margin-top: 10px;
   font-size: 0.9rem;
   color: #007bff;
@@ -225,13 +232,245 @@ h1 {
   color: #0056b3;
   transform: scale(1.05);
 }
-label{
+
+label {
   font-size: 1rem;
   font-weight: bold;
 }
-h1{
+
+h1 {
   font-size: 2.5rem;
   font-weight: bold;
   color: #0772b7;
+}
 
+
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+form button {
+  background-color: #0772b7;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0b9af9;
+}
+
+ul {
+  margin-top: 24px;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ffffff;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+li h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0772b7;
+}
+
+li p {
+  font-size: 1rem;
+  color: #555;
+}
+
+li button {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-right: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #ff1a1a;
+}
+
+li button:nth-child(2) {
+  background-color: #0b9af9;
+}
+
+li button:nth-child(2):hover {
+  background-color: #0772b7;
+}
+
+
+.exploreRecipesContainer {
+  cursor: default;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #e6ebe0;
+}
+
+.recipeList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.recipeCard {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recipeTitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0772b7;
+  margin: 0;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.recipeDescription {
+  font-size: 1.2rem;
+  color: #000000;
+  
+}
+
+.recipeIngredients,
+.recipeSteps {
+  font-size: 1rem;
+  color: #000000;
+}
+
+.recipeUser {
+  font-style: italic;
+  color: #000000;
+  align-self: flex-end;
+  font-size: 1rem;
+  font-weight: bold;
+
+}
+
+@media (min-width: 768px) {
+  .recipeList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .recipeList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.recipeImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.editButton {
+  background-color: #0772b7; 
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.editButton:hover {
+  background-color: #0b9af9;
+}
+
+.deleteButton {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #d6d6d6;
+}
+.heroImage2 {
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.heroImage2:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+.heroImage3 {
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-top: 10px; /* Reducido para acercarlo más */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.heroImage3:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }

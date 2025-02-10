@@ -1,11 +1,30 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react";
+
+
 
 export default function Home() {
-  console.log('DB URL:', process.env.NILEDB_POSTGRES_URL);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  const handleSignOut = () => {
+    localStorage.removeItem("user"); // Eliminar usuario de localStorage
+    setUser(null); // Actualizar el estado
+    router.push("/"); // Redirigir al usuario a la página de inicio
+  };
 
 
   return (
+    
     <div className="container">
       <header className="header">
         <h1 className="title">
@@ -29,31 +48,36 @@ export default function Home() {
             Encuentra platos principales, postres, recetas veganas y mucho más.
           </p>
           <div className="buttonsHome">
-            <a href="" className="buttonExplorarRecetas">
+            <Link href="/explorerRecipes" className="buttonExplorarRecetas">
               Explorar Recetas
-            </a>
-            <Link href="/login" className="buttonLogin">
-            Registrarse
             </Link>
+            {!user ? (
+             <><Link href="/login" className="buttonLogin">
+              Inicar Sesion
+              </Link>
+             <Link href="/register" className="buttonLogin">
+                Registrarse
+              </Link></>
+            ) : (
+              <><Link href="/recipes" className="buttonExplorarRecetas">
+                  Añadir Receta
+                </Link>
+                <Link href="/misRecetas" className="buttonLogin">
+                  Mis Recetas
+                </Link>
+                <Link href="/recetasGuardadas" className="buttonLogin">
+                  Recetas Guardadas
+                </Link>
+                <button onClick={handleSignOut} className="buttonLogin">
+                    Cerrar Sesión
+                  </button></>
+            )}
+
           </div>
         </div>
 
-    
         <section className="features">
           <div className="feature">
-          <Image
-            src="/images/simbolo-de-la-interfaz-de-busqueda.png" 
-            alt="Recetas favoritas"
-            width={40}
-            height={40}
-          />
-            <div>
-              <h3 className="featureTitulo">Búsqueda Avanzada</h3>
-              <p className="featureDescripcion">
-                Filtra recetas por ingredientes, tiempo de preparación o
-                dificultad.
-              </p>
-            </div>
           </div>
           <div className="feature">
             <Image
@@ -93,13 +117,12 @@ export default function Home() {
             <div>
               <h3 className="featureTitulo">Comunidad Activa</h3>
               <p className="featureDescripcion">
-                Interactúa con otros usuarios dejando comentarios y valoraciones.
+                Interactúa con otros usuarios 
               </p>
             </div>
           </div>
         </section>
       </main>
-
     </div>
   );
 }
