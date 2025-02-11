@@ -11,7 +11,6 @@ interface User {
 }
 
 export default function Home() {
-  // Se evita el uso de any usando User | null
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 

@@ -524,3 +524,15 @@ li button:nth-child(2):hover {
     gap: 10px;
   }
 }
+.like-button {
+  font-size: 30px;  
+  padding: 10px;    
+  border: none;    
+  background-color: transparent; 
+  cursor: pointer;  
+  transition: transform 0.2s ease;  
+}
+
+.like-button:hover {
+  transform: scale(1.2); 
+}

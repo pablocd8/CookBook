@@ -40,13 +40,20 @@ export default function ExploreRecipes() {
   // Función para manejar "Like"
   const handleLike = async (recipeId: number) => {
     try {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+        alert("Debes iniciar sesión para darle like a una receta");
+        return;
+      }
+      const user = JSON.parse(storedUser);
+      console.log(recipeId,user.id);
       const res = await fetch("/api/likedRecipes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ recipeId }),
+        body: JSON.stringify({ recipeId, userId: user.id }),
       });
       if (!res.ok) {
-        const err = await res.json(); 
+        const err = await res.json();
         throw new Error(err.error || "Error al guardar la receta");
       }
       alert("Receta guardada!");
@@ -91,7 +98,8 @@ export default function ExploreRecipes() {
                   height={200}
                   className="recipeImage" 
                 />
-                <button onClick={() => handleLike(recipe.id)}>Like</button>
+                <button onClick={() => handleLike(recipe.id)} className="like-button" aria-label="Like Recipe">❤️</button>
+
               </div>
             ))
           )}
