@@ -1,11 +1,12 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+
 interface Recipe {
+  id: number;
   user_id: number;
   title: string;
   description: string;
@@ -25,6 +26,10 @@ export default function ExploreRecipes() {
       try {
         const res = await fetch("/api/exploreRecipes");
         const data = await res.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("El formato de datos recibido no es un array");
+        }
         setRecipes(data);
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -33,40 +38,58 @@ export default function ExploreRecipes() {
     fetchRecipes();
   }, []);
 
-  // Calcular el rango de recetas a mostrar
+  // Función para manejar "Like"
+  const handleLike = async (recipeId: number) => {
+    try {
+      const res = await fetch("/api/likedRecipes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ recipeId }),
+      });
+      if (!res.ok) {
+        const err = await res.json(); 
+        throw new Error(err.error || "Error al guardar la receta");
+      }
+      alert("Receta guardada!");
+    } catch (error: any) {
+      console.error("Error adding liked recipe:", error);
+      alert(error.message);
+    }
+  };
+
   const indexOfLastRecipe = page * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
-  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
   return (
-    
     <>
-  <Link href="/">
-  <Image
-    src="/images/super-chef-fork-spatula-chef-hero-mascot-vector-illustration-mascot-logo-image-super-chef-fork-spatula-chef-hero-197636829.webp"
-    alt="Hero de CookBook Online"
-    width={110}
-    height={110}
-    className="heroImage2"
-  />
-</Link>
+      <Link href="/">
+        <Image
+          src="/images/super-chef-fork-spatula-chef-hero-mascot-vector-illustration-mascot-logo-image-super-chef-fork-spatula-chef-hero-197636829.webp"
+          alt="Hero de CookBook Online"
+          width={110}
+          height={110}
+          className="heroImage2"
+        />
+      </Link>
       <div className="exploreRecipesContainer">
         <h1>Explorar Recetas</h1>
         <div className="recipeList">
-          {currentRecipes.map((recipe, i) => (
-            <div key={recipe.title + i} className="recipeCard">
-              <h2 className="recipeTitle">{recipe.title}</h2>
-              <p className="recipeDescription">{recipe.description}</p>
-              <p className="recipeIngredients">{recipe.ingredients}</p>
-              <p className="recipeSteps">{recipe.steps}</p>
-              <p className="recipeUser">Publicado por: {recipe.user_name}</p>
-              <img src={recipe.image_url} alt={recipe.title} className="recipeImage" />
-            </div>
-          ))}
+          {(!Array.isArray(currentRecipes) || currentRecipes.length === 0) ? (
+            <p>No hay recetas disponibles</p>
+          ) : (
+            currentRecipes.map((recipe, i) => (
+              <div key={recipe.title + i} className="recipeCard">
+                <h2 className="recipeTitle">{recipe.title}</h2>
+                <p className="recipeDescription">{recipe.description}</p>
+                <p className="recipeIngredients">{recipe.ingredients}</p>
+                <p className="recipeSteps">{recipe.steps}</p>
+                <p className="recipeUser">Publicado por: {recipe.user_name}</p>
+                <img src={recipe.image_url} alt={recipe.title} className="recipeImage" />
+                <button onClick={() => handleLike(recipe.id)}>Like</button>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
@@ -74,7 +97,7 @@ export default function ExploreRecipes() {
         <Pagination
           count={Math.ceil(recipes.length / recipesPerPage)}
           page={page}
-          onChange={handlePageChange}
+          onChange={(_event, value) => setPage(value)}
           color="primary"
         />
       </Stack>

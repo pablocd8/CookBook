@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import pool from "@/lib/db"
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     const result = await pool.query("SELECT * FROM recipes")
     console.log("Fetched recipes:", result.rows)

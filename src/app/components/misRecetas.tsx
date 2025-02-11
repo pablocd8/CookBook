@@ -1,7 +1,13 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
+// Definir un tipo para el usuario
+interface User {
+  id: number;
+  // Puedes extender con otras propiedades si es necesario
+}
 
 interface Recipe {
   id: number;
@@ -15,7 +21,7 @@ interface Recipe {
 
 export default function MisRecetas() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
   const recipesPerPage = 3;
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -24,19 +30,33 @@ export default function MisRecetas() {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
+      const parsedUser: User = JSON.parse(storedUser);
       setUser(parsedUser);
+
+      //console.log("Usuario obtenido de localStorage:", parsedUser); // <-- Verificar usuario almacenado
+
       fetch(`/api/misRecetas?user_id=${parsedUser.id}`)
         .then((res) => res.json())
-        .then((data) => setRecipes(data))
+        .then((data) => {
+          console.log("Datos recibidos de la API:", data); // <-- Verificar datos de la API
+
+          if (!Array.isArray(data)) {
+            console.error("Error: La API no devolvió un array válido.");
+            return;
+          }
+
+          setRecipes(data);
+        })
         .catch((error) => console.error("Error fetching user recipes:", error));
     }
   }, []);
 
-
   const indexOfLastRecipe = page * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+
+  // console.log("Todas las recetas en el estado:", recipes); // <-- Verificar estado actual
+  // console.log("Recetas en la página actual:", currentRecipes); // <-- Verificar paginación
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -52,6 +72,9 @@ export default function MisRecetas() {
         body: JSON.stringify({ id, user_id: user?.id }),
       });
       const data = await res.json();
+
+      //console.log("Respuesta del DELETE:", data); // <-- Verificar respuesta de eliminación
+
       if (data.recipe && data.recipe.id === id) {
         setRecipes(recipes.filter((recipe) => recipe.id !== id));
       } else {
@@ -62,10 +85,10 @@ export default function MisRecetas() {
     }
   };
 
-
   const startEditing = (recipe: Recipe) => {
     setEditingId(recipe.id);
     setEditData(recipe);
+    //console.log("Editando receta:", recipe); // <-- Verificar qué receta se está editando
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -86,6 +109,9 @@ export default function MisRecetas() {
         body: JSON.stringify({ ...editData, id, user_id: user?.id }),
       });
       const data = await res.json();
+
+      //console.log("Respuesta del PUT:", data); // <-- Verificar respuesta de edición
+
       if (data.recipe && data.recipe.id === id) {
         setRecipes(recipes.map((r) => (r.id === id ? data.recipe : r)));
         setEditingId(null);
@@ -106,62 +132,66 @@ export default function MisRecetas() {
           <p>No tienes recetas creadas</p>
         ) : (
           <div className="recipeList">
-            {currentRecipes.map((recipe) => (
-              <div key={recipe.id} className="recipeCard">
-                {editingId === recipe.id ? (
-                  <>
-                    <input
-                      type="text"
-                      name="title"
-                      value={editData.title || ""}
-                      onChange={handleEditChange}
-                      className="recipeTitle"
-                    />
-                    <textarea
-                      name="description"
-                      value={editData.description || ""}
-                      onChange={handleEditChange}
-                      className="recipeDescription"
-                    />
-                    <textarea
-                      name="ingredients"
-                      value={editData.ingredients || ""}
-                      onChange={handleEditChange}
-                      className="recipeIngredients"
-                    />
-                    <textarea
-                      name="steps"
-                      value={editData.steps || ""}
-                      onChange={handleEditChange}
-                      className="recipeSteps"
-                    />
-                    <input
-                      type="text"
-                      name="image_url"
-                      value={editData.image_url || ""}
-                      onChange={handleEditChange}
-                      className="recipeImage"
-                    />
-                   <div className="buttonContainer">
-                    <button className="editButton" onClick={() => handleEditSubmit(recipe.id)}>Guardar</button>
-                    <button className="deleteButton" onClick={cancelEditing}>Cancelar</button>
-                   </div>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="recipeTitle">{recipe.title}</h2>
-                    <p className="recipeDescription">{recipe.description}</p>
-                    <p className="recipeIngredients">{recipe.ingredients}</p>
-                    <p className="recipeSteps">{recipe.steps}</p>
-                    <img src={recipe.image_url} alt={recipe.title} className="recipeImage" />
-                  <div className="buttonContainer">
-                    <button className="editButton" onClick={() => startEditing(recipe)}>Editar</button>
-                    <button className="deleteButton" onClick={() => handleDelete(recipe.id)}>Eliminar</button>
-                  </div>
-                  </>
-                )}
-              </div>
-            ))}
+            {currentRecipes.map((recipe) => {
+              console.log("Receta en el map:", recipe); // Se imprime cada receta en la consola
+              return (
+                <div key={recipe.id} className="recipeCard">
+                  {editingId === recipe.id ? (
+                    <>
+                      <input
+                        type="text"
+                        name="title"
+                        value={editData.title || ""}
+                        onChange={handleEditChange}
+                        className="recipeTitle"
+                      />
+                      <textarea
+                        name="description"
+                        value={editData.description || ""}
+                        onChange={handleEditChange}
+                        className="recipeDescription"
+                      />
+                      <textarea
+                        name="ingredients"
+                        value={editData.ingredients || ""}
+                        onChange={handleEditChange}
+                        className="recipeIngredients"
+                      />
+                      <textarea
+                        name="steps"
+                        value={editData.steps || ""}
+                        onChange={handleEditChange}
+                        className="recipeSteps"
+                      />
+                      <input
+                        type="text"
+                        name="image_url"
+                        value={editData.image_url || ""}
+                        onChange={handleEditChange}
+                        className="recipeImage"
+                      />
+                      <div className="buttonContainer">
+                        <button className="editButton" onClick={() => handleEditSubmit(recipe.id)}>Guardar</button>
+                        <button className="deleteButton" onClick={cancelEditing}>Cancelar</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="recipeTitle">{recipe.title}</h2>
+                      <p className="recipeDescription">{recipe.description}</p>
+                      <p className="recipeIngredients">{recipe.ingredients}</p>
+                      <p className="recipeSteps">{recipe.steps}</p>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={recipe.image_url} alt={recipe.title} className="recipeImage" />
+                      <div className="buttonContainer">
+                        <button className="editButton" onClick={() => startEditing(recipe)}>Editar</button>
+                        <button className="deleteButton" onClick={() => handleDelete(recipe.id)}>Eliminar</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

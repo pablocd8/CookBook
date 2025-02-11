@@ -75,56 +75,57 @@ export default function Recipes() {
     }
   }
 
-  const handleDelete = async (id: number) => {
-    try {
-      const res = await fetch("/api/recipes", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      })
-      const data = await res.json()
-      if (data.recipe && "id" in data.recipe) {
-        setRecipes(recipes.filter((recipe) => recipe.id !== data.recipe.id))
-      } else {
-        console.error("Invalid response from server on delete")
-      }
-    } catch (error) {
-      console.error("Error deleting recipe:", error)
-    }
-  }
+  // Eliminamos o comentamos las funciones no utilizadas
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     const res = await fetch("/api/recipes", {
+  //       method: "DELETE",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ id }),
+  //     })
+  //     const data = await res.json()
+  //     if (data.recipe && "id" in data.recipe) {
+  //       setRecipes(recipes.filter((recipe) => recipe.id !== data.recipe.id))
+  //     } else {
+  //       console.error("Invalid response from server on delete")
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting recipe:", error)
+  //   }
+  // }
 
-  const handleEdit = async (id: number) => {
-    const recipeToEdit = recipes.find((recipe) => recipe.id === id)
-    if (!recipeToEdit) {
-      console.error("Recipe not found")
-      return
-    }
+  // const handleEdit = async (id: number) => {
+  //   const recipeToEdit = recipes.find((recipe) => recipe.id === id)
+  //   if (!recipeToEdit) {
+  //     console.error("Recipe not found")
+  //     return
+  //   }
 
-    setNewRecipe({
-      title: recipeToEdit.title,
-      description: recipeToEdit.description,
-      ingredients: recipeToEdit.ingredients,
-      steps: recipeToEdit.steps,
-      image_url: recipeToEdit.image_url,
-      user_id: JSON.parse(localStorage.getItem("user") || "{}")?.id || null
-    })
+  //   setNewRecipe({
+  //     title: recipeToEdit.title,
+  //     description: recipeToEdit.description,
+  //     ingredients: recipeToEdit.ingredients,
+  //     steps: recipeToEdit.steps,
+  //     image_url: recipeToEdit.image_url,
+  //     user_id: JSON.parse(localStorage.getItem("user") || "{}")?.id || null
+  //   })
 
-    try {
-      const res = await fetch("/api/recipes", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...newRecipe, id }),
-      })
-      const data = await res.json()
-      if (data.recipe && "id" in data.recipe && "title" in data.recipe) {
-        setRecipes(recipes.map((recipe) => (recipe.id === id ? data.recipe : recipe)))
-      } else {
-        console.error("Invalid response from server on edit")
-      }
-    } catch (error) {
-      console.error("Error editing recipe:", error)
-    }
-  }
+  //   try {
+  //     const res = await fetch("/api/recipes", {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ ...newRecipe, id }),
+  //     })
+  //     const data = await res.json()
+  //     if (data.recipe && "id" in data.recipe && "title" in data.recipe) {
+  //       setRecipes(recipes.map((recipe) => (recipe.id === id ? data.recipe : recipe)))
+  //     } else {
+  //       console.error("Invalid response from server on edit")
+  //     }
+  //   } catch (error) {
+  //     console.error("Error editing recipe:", error)
+  //   }
+  // }
 
   return (
     <div className="divPadreForm">
@@ -175,9 +176,6 @@ export default function Recipes() {
 
         <button type="submit">Agregar Receta</button>
       </form>
-
-
     </div>
   )
 }
-

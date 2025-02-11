@@ -65,7 +65,7 @@ export default function Home() {
                 <Link href="/misRecetas" className="buttonLogin">
                   Mis Recetas
                 </Link>
-                <Link href="/recetasGuardadas" className="buttonLogin">
+                <Link href="/likedRecipes" className="buttonLogin">
                   Recetas Guardadas
                 </Link>
                 <button onClick={handleSignOut} className="buttonLogin">
