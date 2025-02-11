@@ -21,9 +21,9 @@ body {
   background-color: #e6ebe0;
   color: #333;
   font-family: Arial, sans-serif;
-  margin: 0 auto;         /* Centrado horizontal */
-  max-width: 1200px;      /* Máximo ancho para pantallas grandes */
-  padding: 0 20px;        /* Espacio interno en pantallas pequeñas */
+  margin: 0 auto;         
+  max-width: 1200px;      
+  padding: 0 20px;       
 }
 
 .header {
@@ -59,6 +59,11 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.heroImage:hover{
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .containerBusquedas {
@@ -255,6 +260,8 @@ form {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  cursor: default;
+  user-select: none;
 }
 
 form input,
@@ -470,7 +477,7 @@ li button:nth-child(2):hover {
   display: block;
   margin: 0 auto;
   cursor: pointer;
-  margin-top: 10px; /* Reducido para acercarlo más */
+  margin-top: 10px; 
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -507,5 +514,13 @@ li button:nth-child(2):hover {
   }
   .recipeCard {
     padding: 15px;
+  }
+  .recipeCard:hover {
+    transform: scale(1.02); 
+  }
+  .buttonsHome {
+    flex-direction: column; 
+    align-items: center;
+    gap: 10px;
   }
 }

@@ -38,7 +38,7 @@ export default function Home() {
           width={400}
           height={200}
           className="heroImage"
-          style={{ maxWidth: "100%", height: "auto" }}
+          priority
         />
         <div className="containerBusquedas">
           <h2 className="tituloBusquedas">Explora nuevas recetas</h2>
