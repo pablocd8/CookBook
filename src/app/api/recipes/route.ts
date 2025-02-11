@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { type NextRequest, NextResponse } from "next/server"
 import pool from "@/lib/db"
 
-export async function GET(_req: NextRequest) {
+export async function GET(_unusedReq: NextRequest) {
   try {
     const result = await pool.query("SELECT * FROM recipes")
     console.log("Fetched recipes:", result.rows)

@@ -31,8 +31,8 @@ export default function ExploreRecipes() {
           throw new Error("El formato de datos recibido no es un array");
         }
         setRecipes(data);
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
+      } catch (error: unknown) {
+        console.error("Error fetching recipes:", (error as Error).message);
       }
     }
     fetchRecipes();
@@ -51,9 +51,9 @@ export default function ExploreRecipes() {
         throw new Error(err.error || "Error al guardar la receta");
       }
       alert("Receta guardada!");
-    } catch (error: any) {
-      console.error("Error adding liked recipe:", error);
-      alert(error.message);
+    } catch (error: unknown) {
+      console.error("Error adding liked recipe:", (error as Error).message);
+      alert((error as Error).message);
     }
   };
 
