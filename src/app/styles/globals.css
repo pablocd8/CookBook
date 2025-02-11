@@ -10,7 +10,8 @@ body {
 }
 .container,
 .header,
-.main{
+.main,
+.footer{
   cursor: default;
   user-select: none;
 }

@@ -19,7 +19,7 @@ export default function Recipes() {
     ingredients: "",
     steps: "",
     image_url: "",
-    user_id: null // Inicialmente null para evitar errores en el servidor
+    user_id: null 
   })
   const router = useRouter()
 

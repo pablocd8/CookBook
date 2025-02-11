@@ -46,17 +46,21 @@ export default function ExploreRecipes() {
         return;
       }
       const user = JSON.parse(storedUser);
-      console.log(recipeId,user.id);
       const res = await fetch("/api/likedRecipes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ recipeId, userId: user.id }),
       });
+      const responseData = await res.json();
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Error al guardar la receta");
+        throw new Error(responseData.error || "Error al guardar la receta");
+      } 
+      // Verifica si ya existe el like
+      if (responseData.message) {
+        alert(responseData.message);
+      } else {
+        alert("Receta guardada!");
       }
-      alert("Receta guardada!");
     } catch (error: unknown) {
       console.error("Error adding liked recipe:", (error as Error).message);
       alert((error as Error).message);

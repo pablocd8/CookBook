@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 
+
+
 export async function POST(request: Request) {
   try {
     const { recipeId, userId } = await request.json();
@@ -9,7 +11,14 @@ export async function POST(request: Request) {
     if (!recipeId || !userId) {
       return NextResponse.json({ error: "recipeId and userId are required" }, { status: 400 });
     }
-    console.log(recipeId, userId);
+    
+    // Verificar si el like ya existe
+    const checkQuery = "SELECT * FROM liked_recipes WHERE user_id = $1 AND recipe_id = $2";
+    const checkResult = await pool.query(checkQuery, [userId, recipeId]);
+    if (checkResult.rows.length > 0) {
+      return NextResponse.json({ message: "La receta ya está guardada" }, { status: 200 });
+    }
+    
     const query = `
       INSERT INTO liked_recipes (user_id, recipe_id)
       VALUES ($1, $2)

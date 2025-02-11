@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-// Definir un tipo para el usuario
+
 interface User {
   id: number;
-  // Puedes extender con otras propiedades si es necesario
+  
 }
 
 interface Recipe {
