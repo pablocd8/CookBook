@@ -1,13 +1,11 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
-
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -16,22 +14,21 @@ export default function Home() {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
   const handleSignOut = () => {
-    localStorage.removeItem("user"); // Eliminar usuario de localStorage
-    setUser(null); // Actualizar el estado
-    router.push("/"); // Redirigir al usuario a la página de inicio
+    localStorage.removeItem("user");
+    setUser(null);
+    router.push("/");
   };
 
-
   return (
-    
     <div className="container">
       <header className="header">
         <h1 className="title">
           Bienvenido a <span className="highlight">CookBook Online</span>
         </h1>
         <p className="subtitle">
-          Descubre, comparte y gestiona recetas de cocina en un solo lugar.
+          Descubre, comparte y gestiona recetas en un solo lugar.
         </p>
       </header>
       <main className="main">
@@ -41,25 +38,29 @@ export default function Home() {
           width={400}
           height={200}
           className="heroImage"
+          style={{ maxWidth: "100%", height: "auto" }}
         />
         <div className="containerBusquedas">
           <h2 className="tituloBusquedas">Explora nuevas recetas</h2>
           <p className="sectionSubtitulos">
-            Encuentra platos principales, postres, recetas veganas y mucho más.
+            Encuentra platos principales, postres, recetas veganas y más.
           </p>
           <div className="buttonsHome">
             <Link href="/explorerRecipes" className="buttonExplorarRecetas">
               Explorar Recetas
             </Link>
             {!user ? (
-             <><Link href="/login" className="buttonLogin">
-              Inicar Sesion
-              </Link>
-             <Link href="/register" className="buttonLogin">
-                Registrarse
-              </Link></>
+              <>
+                <Link href="/login" className="buttonLogin">
+                  Iniciar Sesión
+                </Link>
+                <Link href="/register" className="buttonLogin">
+                  Registrarse
+                </Link>
+              </>
             ) : (
-              <><Link href="/recipes" className="buttonExplorarRecetas">
+              <>
+                <Link href="/recipes" className="buttonExplorarRecetas">
                   Añadir Receta
                 </Link>
                 <Link href="/misRecetas" className="buttonLogin">
@@ -69,55 +70,37 @@ export default function Home() {
                   Recetas Guardadas
                 </Link>
                 <button onClick={handleSignOut} className="buttonLogin">
-                    Cerrar Sesión
-                  </button></>
+                  Cerrar Sesión
+                </button>
+              </>
             )}
-
           </div>
         </div>
-
         <section className="features">
           <div className="feature">
-          </div>
-          <div className="feature">
-            <Image
-              src="/images/favorito.png"
-              alt="Recetas favoritas"
-              width={40}
-              height={40}
-            />
+            <Image src="/images/favorito.png" alt="Favoritos" width={40} height={40} />
             <div>
               <h3 className="featureTitulo">Recetas Favoritas</h3>
               <p className="featureDescripcion">
-                Guarda tus recetas favoritas y accede a ellas fácilmente.
+                Guarda tus recetas favoritas para verlas fácilmente.
               </p>
             </div>
           </div>
           <div className="feature">
-            <Image
-              src="/images/compartir.png"
-              alt="Compartir recetas"
-              width={40}
-              height={40}
-            />
+            <Image src="/images/compartir.png" alt="Compartir" width={40} height={40} />
             <div>
               <h3 className="featureTitulo">Comparte tus Recetas</h3>
               <p className="featureDescripcion">
-                Sube tus propias recetas y comparte tu creatividad culinaria.
+                Sube y comparte tu creatividad culinaria.
               </p>
             </div>
           </div>
           <div className="feature">
-            <Image
-              src="/images/comentario.png"
-              alt="Comunidad de cocina"
-              width={40}
-              height={40}
-            />
+            <Image src="/images/comentario.png" alt="Comunidad" width={40} height={40} />
             <div>
               <h3 className="featureTitulo">Comunidad Activa</h3>
               <p className="featureDescripcion">
-                Interactúa con otros usuarios 
+                Interactúa con otros usuarios y descubre nuevas recetas.
               </p>
             </div>
           </div>
