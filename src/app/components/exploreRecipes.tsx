@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Image from "next/image";
 import Link from "next/link";
 
 interface Recipe {
@@ -64,7 +63,7 @@ export default function ExploreRecipes() {
   return (
     <>
       <Link href="/">
-        <Image
+        <img
           src="/images/super-chef-fork-spatula-chef-hero-mascot-vector-illustration-mascot-logo-image-super-chef-fork-spatula-chef-hero-197636829.webp"
           alt="Hero de CookBook Online"
           width={110}
@@ -85,7 +84,13 @@ export default function ExploreRecipes() {
                 <p className="recipeIngredients">{recipe.ingredients}</p>
                 <p className="recipeSteps">{recipe.steps}</p>
                 <p className="recipeUser">Publicado por: {recipe.user_name}</p>
-                <img src={recipe.image_url} alt={recipe.title} className="recipeImage" />
+                <img 
+                  src={recipe.image_url} 
+                  alt={recipe.title}
+                  width={500} 
+                  height={200}
+                  className="recipeImage" 
+                />
                 <button onClick={() => handleLike(recipe.id)}>Like</button>
               </div>
             ))

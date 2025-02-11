@@ -4,8 +4,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export default function Home() {
-  const [user, setUser] = useState<any>(null);
+  // Se evita el uso de any usando User | null
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
