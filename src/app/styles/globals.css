@@ -478,3 +478,32 @@ li button:nth-child(2):hover {
   transform: scale(1.05);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
+
+@media (max-width: 768px) {
+  .container {
+    margin-left: 0;
+    width: 100%;
+    padding: 0 10px;
+  }
+  .header {
+    padding: 10px 0;
+    text-align: center;
+  }
+  .main {
+    padding: 10px 0;
+  }
+  .formLogin {
+    width: 95%;
+    padding: 20px;
+  }
+  .contenedorInput {
+    width: 100%;
+  }
+  .recipeList {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .recipeCard {
+    padding: 15px;
+  }
+}
